@@ -1,0 +1,19 @@
+{
+  "name": "part3",
+  "version": "1.0.0",
+  "description": "Fullstack Open MOOC part 3",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Borsas/fullstack2020_part3.git"
+  },
+  "author": "Borsas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Borsas/fullstack2020_part3/issues"
+  },
+  "homepage": "https://github.com/Borsas/fullstack2020_part3#readme"
+}
