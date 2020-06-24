@@ -20,6 +20,28 @@ app.get("/api/persons", (req, resp) => {
     resp.json(persons)
 })
 
+app.post("/api/persons", (req, resp) => {
+    let newPerson = req.body
+
+    if (!(newPerson.name && newPerson.number)){
+        return resp.status(400).json({
+            error: "Name or number missing"
+        })
+    }
+
+    if (persons.find(person => person.name === newPerson.name)){
+        return resp.status(400).json({
+            error: "Name must be unique"
+        })
+    }
+    
+    const id = Math.floor(Math.random() *10000000)
+    newPerson.id = id
+
+    persons = persons.concat(newPerson)
+    resp.json(newPerson)
+})
+
 app.get("/api/persons/:id", (req, resp) => {
     const id = Number(req.params.id)
     const person = persons.find(person => person.id === id)
