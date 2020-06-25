@@ -21,14 +21,8 @@ app.get("/api/persons", (req, resp) => {
     })
 })
 
-app.post("/api/persons", (req, resp) => {
+app.post("/api/persons", (req, resp, next) => {
     let newPerson = req.body
-
-    if (!(newPerson.name && newPerson.number)){
-        return resp.status(400).json({
-            error: "Name or number missing"
-        })
-    }
 
     const person = new Persons({
         name: newPerson.name,
@@ -39,6 +33,7 @@ app.post("/api/persons", (req, resp) => {
     .then(savedPerson => {
         resp.json(savedPerson)
     })
+    .catch(err => next(err))
 })
 
 app.get("/api/persons/:id", (req, resp, next) => {
@@ -95,10 +90,14 @@ app.get("/info", (req, resp, next) => {
 })
 
 const handleErrors = (error, req, resp, next) => {
-    console.log(error.message)
+    console.log(error)
 
     if (error.name === "CastError") {
         return resp.status(400).send({error: "Malformed id"})
+    } else if (error.name === "ValidationError") {
+        return resp.status(400).json({ error: error})
+    } else if (error.name === "MongoError") {
+        return resp.status(400).send({error: error})
     }
     next(error)
 }
